@@ -1,0 +1,110 @@
+admin 하나 만들어서,. CLI설치, Terraform설치..
+
+BLOB이랑, CDN 먼저 만들어야
+
+vnet 6.0.0.0/16하고 106.0.0.0/16으로 구성
+리소스 그룹을 다르게 만들어야, vnet이름도 다르게
+
+웹서버에서 index.html에 <img src="CDNURL/sample.jpg> 등록
+
+리전은 두개로 만들어서 웹서버 구성하고 이미지를 다르게 등록
+user06-rg1 
+user06-rg2
+
+집에서만 접속 되도록 구성_my ip
+
+피어링 이름, 내거, 원격지를 등록하면 됨.. 포털에서 간단함.
+==> 테라폼에서는 이름과 상대만 지정하면 됨.
+
+트래픽 매니저 만들어서 CDN 연결
+
+등..
+
+Azure Mid Project
+
+Admin 서버 준비 (Ubuntu)
+
+Azure CLI 설치
+
+apt-get update -y 로 패키지 업데이트 후
+
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+Terraform 설치
+
+Terraform 다운로드
+
+wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
+
+unzip 설치
+
+sudo apt install unzip
+
+압축 풀기
+
+unzip terraform_0.15.1_linux_amd64.zip
+
+/bin에 terraform 파일 복사
+
+sudo cp terraform /bin
+
+CDN, Blob  생성 후 연결
+
+CDN과 Blob 연결.mp4
+Azure 접속을 위한 Credential 확인
+
+테넌트 IP, 구독 I 확인
+
+az login  실행하면 웹브라우저에서 계정으로 한번 인증 필요
+
+Service Principle 생성
+
+az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/
+SUBSCRIPTION_ID“
+
+subscription ID, tenant ID, client ID, client Secret  구한 후, 전역 변수로 등록
+
+export ARM_CLIENT_ID="00000000-0000-0000-0000-000000000000"
+
+export ARM_CLIENT_SECRET="00000000-0000-0000-0000-000000000000"
+
+export ARM_SUBSCRIPTION_ID="00000000-0000-0000-0000-000000000000"
+
+export ARM_TENANT_ID="00000000-0000-0000-0000-000000000000"
+
+Terraform 작업
+
+Provider 지정 (azurerm)
+
+provider "azurerm" {
+
+      features {}
+
+}
+
+VMSS 오토스케일링 상세 설정
+
+참고 자료 : azurerm_monitor_autoscale_setting | Resources | hashicorp/azurerm |
+Terraform Registry
+
+위 자료에서 아래 부분 수정해서 사용하시면 됩니다.
+
+(상세 설정 어려우시면 그냥 기존 설정으로 진행해 주세요)
+
+resource "azurerm_monitor_autoscale_setting" "example" {
+
+중략
+
+  profile {
+
+       name = "defaultProfile"
+
+       capacity {
+
+               default = 1
+
+               minimum = 1
+
+               maximum = 10
+
+}
