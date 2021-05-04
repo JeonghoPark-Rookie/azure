@@ -1,0 +1,295 @@
+접근성 보기
+SKCC Cloud 엔지니어링 과정
+참고 자료
+
+Platform Operations 과정 참고자료
+
+Project 관련 자료
+
+<Middle Project 참고자료>
+
+프로젝트 아키텍처
+https://bit.ly/2V53O6x
+IP Block
+https://bit.ly/2XaWW80
+Amazon Linux  서버에서 httpd 설치하기
+https://bit.ly/36d8Zpc
+VPC Peering
+https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-
+connection.html#create-vpc-peering-connection-local
+Terraform 예제
+https://github.com/lormadus/aws-autoscaling-terraform
+VPC Peering 테라폼 참고 문서
+https://www.terraform.io/docs/providers/aws/r/vpc_peering_connection.html
+Multi Region Peering 문법
+https://www.terraform.io/docs/providers/aws/r/
+vpc_peering_connection_accepter.html
+ALB에 부하 테스트 방법  (ALB ID https://docs.aws.amazon.com/
+elasticloadbalancing/latest/classic/enable-access-logs.html)
+Linux/Mac: 아래 명령어 실행
+$ for i in {1..24}; do curl mydemo-lb-1034186611.ap-
+northeast-2.elb.amazonaws.com; sleep 10;done
+Windows: 아래 PowerShell 명령어 실행
+PS > for($i=0;$i -lt 24;$i++){wget mydemo-lb-1034186611.ap-
+northeast-2.elb.amazonaws.com;start-sleep -Seconds 10}
+<부하 발생 스크립트 - EC2 인스턴스 내에서 실행>
+
+#!/bin/bash# unixfoo.blogspot.com
+
+if [ $1 ];
+
+then        NUM_PROC=$1
+
+else        NUM_PROC=10
+
+fi
+
+for i in `seq 0 $((NUM_PROC-1))`;
+
+do
+
+awk 'BEGIN {for(i=0;i<10000;i++)for(j=0;j<10000;j++);}' &
+
+done
+
+echo "PIDS: `pidof awk`"
+
+8. Docker 실습파일 : https://bit.ly/3e5mzgV
+
+9. Docker 교재 :  https://bit.ly/31tPQNK
+
+                            : https://bit.ly/2PG3Leq
+
+10. Container :
+
+<Launch Configuration User Data 부분에 CodeDeploy Agent 설치 부분 추가 필요>
+
+yum install -y aws-cli
+
+yum install -y git
+
+cd /home/ec2-user/
+
+yum -y update
+
+sudo yum -y install ruby# sudo
+
+yum -y install wget
+
+(아래 주소는 각 자 Region 별로 수정 필요)
+
+wget https://aws-codedeploy-us-east-2.s3.amazonaws.com/latest/codedeploy-
+agent.noarch.rpm
+
+yum -y install codedeploy-agent.noarch.rpm
+
+(AWS Linux 2 AMI는 systemctl 사용 필요)
+
+systemctl  start codedeploy-agent.service
+
+9.  CodeDeploy Autoscaling 참고자료
+
+https://amzn.to/2DbwpB6
+DevOps 참고자료
+
+<DevOps 과정>
+
+AWS CodeCommit 실습 자료
+https://bit.ly/3cRLJj0
+AWS Pipeline 실습 자료
+https://bit.ly/2TpwaYt
+AWS 개발 도구
+https://bit.ly/36gHpaG
+CloudFront 와 S3 설정하기
+개념 이해하기 - https://aws.amazon.com/ko/blogs/korea/amazon-s3-amazon-
+cloudfront-a-match-made-in-the-cloud/
+설정 동영상 - https://www.youtube.com/watch?v=hEdYnN8dnRs
+AWS Hands-On Lab
+https://bit.ly/2X0lt0k
+클라우드 기초 과정 PDF 파일
+https://bit.ly/3d0VGLi
+DevOps
+DevOps 이해하기 - https://bit.ly/3dAO6GI
+GitHub - https://bit.ly/3i8Zkpj
+AWS 개발자 도구 서비스 이해하기 - https://bit.ly/2CIHw42
+AWS CodeCommit - https://bit.ly/3eUHkND
+AWS Pipeline 실습 자료 - https://bit.ly/38b6jtt
+AWS DevOps 실습 자료 - https://github.com/lormadus/aws-devops-essential
+CodeDeploy Agent 설치 참고자료
+https://amzn.to/304fI3A
+<AWS CodeCommit Clone 할 때 에러나는 경우>
+
+아래 명령어 실행시 403 에러가 나는 경우
+
+git clone https://git-codecommit.<YOUR-REGION>.amazonaws.com/v1/repos/
+WebAppRepo
+
+아래 명령어 실행
+
+$git config --global credential.helper "aws codecommit credential-helper $@"
+
+위 명령어 실행후  git clone  재실행 -> 실행  후 Username & Password 입력
+
+(AWS CodeCommit 자격 증명은 IAM->보안자격증명->AWS CodeCommit에 대한
+HTTPS Git 자격 증명 에서 생성)
+
+Final Test 참고자료
+
+<<실습 순서>>
+
+1. Terraform 으로 VPC, Subnet, IGW, RT, SG 등등 생성
+
+2. ALB 생성 전에 IAM role 및 Policy , Instance Profile 생성
+
+3. Launch configuration 에 IAM 적용 / User Data부분에 codedeploy agent 설치 스크립
+트도 추가
+
+4. Auto Scaling 생성
+
+5. CodeCommit 생성
+
+6. CodeBuild 생성
+
+7. CodeDeploy 생성 (S3 eTag 값 주의)
+
+8. CodePipeline 생성
+
+<<Amazon Linux 2세대 설치하는 경우 / CodeDeploy Agent 설치>>
+
+yum update -yyum install ruby -yyum install wget -y(아래 리전은 본인 Region으로 수
+정)
+
+wget https://aws-codedeploy-us-west-2.s3.us-west-2.amazonaws.com/latest/install
+
+chmod 755 install.
+
+/install auto
+
+##데몬 구동
+
+service codedeploy-agent start
+
+<Cloud9  생성 후 변수 등록>
+
+1. Cloud9 에서 Temporary Credential 비활성화우측 상단 기어 모양 클릭 후
+AWS_Settings에서Temporary Credential 버튼 비활성화
+
+(간혹 비활성화 한 이후에도 지역 변경이 안되는 경우반드시 ~/.aws/credentials 파일 내
+용 확인)예) cat ~/.aws/credentials  명령어 실행 후 AWS 포털(aws.amazon.com) IAM 보
+안 자격증명에서생성한 ACCESS_KEY 와 SECRET_ACCESS_KEY와 값이다르면 삭제 & 아래
+"aws configure" 명령어 실행
+
+$aws configure    실행 후 키 등록
+
+$export AWS_ACCESS_KEY_ID=****
+
+$export AWS_SECRET_ACCESS_KEY=***
+
+$export AWS_DEFAULT_REGION=***** (ex, ap-northeast-1)
+
+$export PATH=$PATH:~/environment
+
+위 변수 설정 후 ~/.bashrc에 추가
+
+vi ~/.bashrc
+
+추가 한 후에는 source 명령어로 적용
+
+source ~/.bashrc
+
+변수 설정 내용 확인
+
+$ env | grep AWS
+
+VPC 설정 관련 참고 자료
+
+VPC1 쪽에만 설정
+
+resource "aws_vpc_peering_connection" "foo"  {
+
+peer_owner_id = "4****7878****"
+
+peer_vpc_id   = "${aws_vpc.vpc2.id}"
+
+peer_region = "eu-west-1"
+
+vpc_id        = "${aws_vpc.vpc1.id}"
+
+auto_accept   = true
+
+  tags = {
+
+Name = "VPC Peering between foo and bar"
+
+}}
+
+VPC Peering  관련 Routing Table에서 아래 수정 추가 (VPC1, VPC2  각각 상대방 CIDR
+블럭 적용)
+
+route {
+
+     cidr_block = "9.0.0.0/16"
+
+     gateway_id = "${aws_vpc_peering_connection.owner.id}"
+
+  }
+
+Apache 웹서버 8080 포트로 실행하기
+
+/etc/httpd/conf/httpd.conf 파일을 열어서 Listen 부분을 80에서 8080으로 수정
+
+#Listen 12.34.56.78:80
+
+Listen 8080
+
+설정 저장 후 httpd.service 데몬 재실행
+
+systemctl restart httpd.service
+
+SSH 접속을 위한 RSA Public Key 등록
+
+1. Cloud9이나 리눅스 서버에서  ssh-keygen 실행
+
+$ssh-keygen <ENTER>키 3번 누름
+
+2. 홈디렉토리 및 ~/.ssh 폴더에  id_rsa(Private Key)와 id_rsa.pub(Public Key) 생성 확인
+
+key.tf 파일에서 명시한 id_rsa.pub(공개키) 파일을 AWS EC2 인스턴스의 /home/ec2-
+user/.ssh/authorized_keys 파일에 등록
+
+3. id_rsa.pub 키를 테라폼을 통해 등록 => 참고자료 5번  Github 소스 key.tf 파일 참조
+
+아래  public_key 부분에  id_rsa.pub 키 파일 복사
+
+resource "aws_key_pair" "sshkey" {
+
+key_name   = "david-key"
+
+public_key = "ssh-rsa
+AAAAB3NzaC1yc2EAAAADAQABAAABAQDVKL5oqbTTpblxoPjunm7TjQWYmRc5mZkjC9
+gnMuCSdoSD2m1YJJ4y8Nk/+0xWnbMXmJxSub7Ti2mGp7hbTF31m
++Wn9MebLdG826Qsfd9LQmcdmj7BsOpCH/o1vk
++P71yJybTWqXfaEF9hYmCj0iPzhOFixo9rQwvnMSXEgKgtw5XB8Ic6M0+E1ehZGpQ3eeYF
+2R0mnUJ1OJsuWc3VYqfzE0M4vhtDCL7m6la280op8yGvKHUvkv7+K3n6eMK0J6vAQEaN
+62JTBJEDiYfdt1CjMkIhy860iv7wi7bWW0zRMR2aAFfNAx4ZzDc
++8ILOUjFW1BuPJ5oxrnm0LlEF/guH ec2-user@ip-172-31-20-214"
+
+}
+
+4.  변수 설정에서 키파일 이름 매칭
+
+variable "dev_keyname" {
+
+default = "david-key"
+
+}
+
+5. 서버 접속
+
+cloud9에서 ssh-keygen을 하셨다면
+
+$ssh -i ~/.ssh/id_rsa  ec2-user@EC2_IP주소
+
+Microsoft Sway에서 제작
+"대화형 보고서, 프레젠테이션, 개인 스토리 등을
+
