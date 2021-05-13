@@ -6,11 +6,7 @@ provider "azurerm" {
 }
 
 resource1.tf
-cat 
-provider "azurerm" {
-         features {}
-}
-root@user06admin:~/user06/vmss# cat resource1.tf
+
 resource "azurerm_resource_group" "user06-rg01" {
     name     = "user06-rg01"
     location = "koreacentral"
