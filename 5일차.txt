@@ -1,0 +1,77 @@
+Pipeline :  빌드 --> 배포를 자동화 한 것.
+개발자 + 운영자 ==> 팀으로 구성
+Boards : 프로젝트 관리를 위해 제공,. 시각화
+코드를 받아 Pipeline으로 연결, Package를 가져다가 Container나 POD 로 배포할 수 있으나, 간단히  WEB App을 이용하여 웹서비스를 제공하는 것을 목표로 함
+
+DevOps는 문화이다. 개발팀, 운영팀, Feedback, 개발, 빌드, 테슽, 배포...이런 Silo 문화는 Agile하지 못함
+Package -> Artifact
+
+Velociy, 민첩함이 부족함.
+고객은 완성된 제품보다는 빨리빨리가 중요.
+
+기업에서 운영 개발이 분리된 환경, 프로세스도 다르고 툴도 다르고..
+==> 개발/운영이 한 팀으로 6~8명으로 구성, 2 Pizza의 법칙. SW 개발운영 이론이 DevOps임
+
+작은 결과물을 즉시 배포하고 이에 대한 Feedback을 다음 개발 단계에 반영하는 것이 지속 이루어짐
+==> 이 모든 단계를 자동화, Event에 따라 후속 작업 Trigger 하여 자동으로 진행, Event Triggered 
+
+의도 -> 기획 -> 분석 -> 개발 -> 배포... 완성본은 너무 긺.
+인프라는 코드 화하여 일정 단축
+
+Karnbam Board : 포스트잇을 사용하여 할 일들을 정리. => azure borad라는 툴을 사용
+
+Monolithic/Waterfall <-> Agile/MSA
+
+Sprint, "일정 시간의 주기 동안 해야 하는 것들, Backlog," 을 작성해서 작업을 진행해 나가는 것 ==> Agile
+
+다양한 도구를 사용하여 Pipleline을 구성 함. -> Azure DevOps
+
+MSA를 구성할 경우 연관도가 복잡해서 자동화하지 않으면 관리의 어려움 발생 ==> Service Mesh
+
+DevOps는 사람, 프로세스, 제품(툴)이 함께 결합하여 최종 고객에게 가치를 지속적으로 전달
+
+Pipeline : 각 Stage를 연결(계획&추적 -> 개발 -> 빌드&테스트 -> 배포 -> 운영 -> 모니터링&학습 -> 계획&학습
+
+Jenkins는 CI/CD Tool임 = Azure Pipleline = Azure DevOps(Test+Board+Repository...)에서 지원하는 기능으르로 활용 가능
+
+IaC(Terraform or Ansible)을 CI와 연결하여 언제든지 운영환경으로 배포 가능, 이후 CD를 연결하여 기능이 준비되는 즉시 고객에게 안전하게 기능 제공
+CI는 코드 개발 및 테스트를 포함 함
+
+CI : Build Pipeline
+CD : Realease Pipeline
+
+CI --> Azure Artifact --> CD,  필요한 도구만 골라서 사용
+
+Git pull / clone : Modified
+Git add : Commit 대상 : Staging
+Git Commit : Coomit 완료 <== 여기까지가 Local Repo. : .git repo
+Git push : 중앙 원격 Repo.로 이동 : Git Hub
+
+Clone : 초기 설정, 현재 로컬에 없어서 처음에 가져 올 때, Initial copy, Overwrite
+Fetch : 다른 개발자가 변경(push)한 내용을 받고 싶을 때.. 달라진 것 만 가져 옴.
+Pull : Working or Repo : Fetch는 비교만 하지만 Pull은 Merge해서 가져 옴.
+Fork : 원본 것을 가져 옴.
+
+mkdir
+git init
+vi...
+touch...
+
+git add . : 현재 working directory안의 모든 변경될 파일을 staging으로 올림
+
+git hub을 debops로 연결하고
+fork해서..
+수정해서.. 
+pipeline만들고...
+releae등 등 함.
+
+Final 6/16일..
+반드시 집에서
+오전 이론 시험 60분. 오픈 북.
+오후 실습시험 5시간,
+카메라 온.
+사전에 복습해야 할 수 있음.
+치팅 금지.
+유연한 운영 불가
+
+3번째 실습은 알아서 잘 해보는 걸루
