@@ -1,0 +1,103 @@
+1. 파일 입출력 (기본 명령어)
+   cat, echo , grep , bash, vi
+
+sudo su - root 권한 획득
+       명령어 프롬프트 $-> #
+ctrl + l => 화면 갈무리 / 첫줄부터 명령어 실행
+
+alias ll='ls -al'
+history 사용한 명령어 출력
+!#     history에서 나오는 #번째 명령어 실행
+
+script -a 파일이름
+빠져나올때는 exit
+
+cat /etc/sudoers  root 권한으로 실행하는 사용자, 명령어 설정
+
+
+useradd -g root user1 root 그룹에 사용자 user1 추가
+passwd user1   user1의 패스워드 설정
+
+/etc/passwd 파일에 추가된 사용자 정보 확인간으
+user1:x:1001:0::/home/user1:/bin/bash
+
+퍼미션
+사용자 그룹 others
+r 4
+w 2
+x 1
+
+chattr +i 파일이름   수정, 삭제 불가
+chattr -i 파일이름   속성 제거
+lsattr 파일이름       파일 속성확인 
+
+less, more 파일이름   파일 내용 확인/ 나오려면 q
+cat 파일이름 
+
+
+
+head  -10 파일이름    파일 초기10줄만 출력
+
+tail -3 파일 이름      파일 마지막 3줄만 출력 
+tail -f 파일이름       변경 사항 실시간 확인 
+
+| 파이프라인   앞 명령어 결과를 뒤 명령어 입력으로 전달
+
+grep 특정 문자 필터링 
+grep -v
+grep "문자"
+grep -nr "문자"   하위 디렉토리까지 검색 
+
+
+
+ps 프로세스 출력
+ps -aux 
+ps -aux | grep ssh 
+ps -aux | grep -v root    -v 옵션은 미포함 
+
+리다이렉션
+>      신규로 생성
+>>      추가
+
+
+top
+vmstat -t 1     1초 간격으로 CPU,메모리 사용량 확인
+ctrl + c  로 종료
+
+
+
+
+2. 네트워크 관련 
+   ssh, ping, host, traceroute , netstat
+
+ssh-keygen 명령어로 RSA 키 쌍(key pair) 생성
+
+cd ~/.ssh 로 이동 한 후 id_rsa.pub 파일을 authorized_keys에 복사
+cat id_rsa.pub >> authorized_keys
+
+ssh -i 개인키 사용자@서버IP -p 포트
+
+tar cvfz 파일명 디렉토리   압축하기
+tar xvzf 파일명 디렉토리   압축 풀기
+
+
+netstat -antp    TCP 오픈 포트 확인, Process까지 확인
+
+3. 디스크 마운트 (fdisk, mount)
+
+4.  vi
+
+dd 한줄 삭제
+yy 한줄 복사
+p 붙여넣기
+J(대문자) 아래줄 위로 올리는거
+:set nu   라인 번호 표시
+:#
+
+:%s/world/Hello/g
+
+명령 취소하고 싶으실 때 u
+:w
+:wq
+:q
+:q!
